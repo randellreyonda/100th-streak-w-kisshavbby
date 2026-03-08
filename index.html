@@ -3,55 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>100-Day Streak Celebration!</title>
+    <title>🎉 100 Day Streak Celebration! 🎉</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
-            background: linear-gradient(120deg, #84fab0, #8fd3f4);
-            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: white;
             font-family: 'Arial', sans-serif;
+            overflow: hidden;
         }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
         h1 {
-            font-size: 5em;
-            animation: fadeIn 1s ease-in-out;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+
+        .streak-number {
+            font-size: 5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            animation: pulse 1s ease-in-out infinite;
         }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            background-color: #ff6f61;
+            color: white;
+            cursor: pointer;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff4e50;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
         .confetti {
-            position: absolute;
-            width: 5px;
-            height: 30px;
-            background: red;
-            opacity: 0.8;
-            bottom: 100%;
-            animation: fall linear forwards;
-        }
-        @keyframes fall {
-            0% { transform: translateY(-300px); }
-            100% { transform: translateY(100vh); }
+            position: fixed;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
-    <h1>🎉 Happy 100-Day Streak bby kong maganda! 🎉</h1>
+    <div class="container">
+        <h1>🔥 You Did It! 🔥</h1>
+        <p style="font-size: 1.5rem; margin-bottom: 20px;">100 Day Streak Achieved!</p>
+        <div class="streak-number">100</div>
+        <p style="font-size: 1.2rem; margin: 20px 0;">Consistency. Dedication. Success.</p>
+        <button id="celebrateBtn">🎊 Celebrate! 🎊</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.4.0/confetti.browser.min.js"></script>
     <script>
-        const createConfetti = () => {
-            const confetti = document.createElement('div');
-            confetti.className = 'confetti';
-            confetti.style.left = Math.random() * 100 + 'vw';
-            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-            document.body.appendChild(confetti);
-            setTimeout(() => {
-                confetti.remove();
-            }, 3000);
+        function launchConfetti() {
+            var count = 200;
+            var defaults = {
+                origin: { y: 0.7 }
+            };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, decay: 0.8, scalar: 1.2 });
+            fire(0.1, { spread: 120, decay: 0.6, scalar: 1.5 });
         }
 
-        setInterval(createConfetti, 200);
+        window.addEventListener('load', () => {
+            setTimeout(launchConfetti, 500);
+        });
+
+        document.getElementById('celebrateBtn').addEventListener('click', launchConfetti);
+
+        // Auto-launch confetti every 6 seconds
+        setInterval(launchConfetti, 6000);
     </script>
 </body>
 </html>
